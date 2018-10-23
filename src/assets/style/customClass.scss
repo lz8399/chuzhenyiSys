@@ -1,0 +1,73 @@
+html{
+    font: menu;
+    height: 100%;
+}
+body{
+    //font-size: 16px;
+    height: 100%;
+    margin: 0;
+    color: #6D6D6D;
+}
+
+.no-padding{
+    padding: 0;
+}
+.padding10{
+    padding: 10px;
+}
+.padding20{
+    padding: 20px;
+}
+
+.margin5{
+    margin: 5px;
+}
+
+.margin10{
+    margin: 10px;
+}
+
+.margin20{
+    margin: 20px;
+}
+
+.text-align-center{
+    text-align: center;
+}
+
+.logo{  // logo
+    background: url("../../assets/images/logo_40.png") no-repeat;
+    background-size: 100% 100%;
+}
+
+.tx-icon{   // 头像
+    background: url("../../assets/images/tx_small.jpg") no-repeat;
+    background-size: 100% 100%;
+
+}
+
+.homepage-rootdiv{
+    // 覆盖card样式
+    .el-card{
+        .el-card__header{
+            padding: 10px 20px;
+        }
+
+    }
+}
+
+.card-header-pad10{
+    padding: 10px 0;
+}
+
+.card-title-text{
+    color: #696969;
+    font-weight: bold;
+}
+
+// 表格样式
+// 单元格padding为6
+    .cell-cls6{
+        padding: 6px 0!important;
+    }
+

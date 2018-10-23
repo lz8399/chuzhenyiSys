@@ -1,0 +1,116 @@
+html{
+    font: menu;
+    height: 100%;
+}
+body{
+    //font-size: 16px;
+    height: 100%;
+    margin: 0;
+    color: #6D6D6D;
+}
+
+.margin20{
+    margin: 20px;
+}
+
+.logo{  // logo
+    background: url("../../assets/images/logo_40.png") no-repeat;
+    background-size: 100% 100%;
+}
+
+.tx-icon{   // 头像
+    background: url("../../assets/images/tx_small.jpg") no-repeat;
+    background-size: 100% 100%;
+
+}
+
+// 覆盖card样式
+.el-card{
+    .el-card__header{
+        padding: 10px 20px;
+    }
+
+}
+
+
+
+// 地图样式
+
+.popup-margin0{     // popup中margin为0
+    .leaflet-popup-content{ // popup样式
+        margin: 0px;
+    }
+}
+
+
+.nameTooltip{
+    padding: 0px 5px 0px 5px;
+    margin: 0;
+    width: auto;
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+    border-radius: 3px;
+    color: white;
+    background: linear-gradient(#6fb979,#3f934b);
+}
+
+.nameTooltip2{
+    padding: 0px 5px 0px 5px;
+    margin: 0;
+    width: auto;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    border-radius: 3px;
+    color: #000000;
+    /*background: linear-gradient(#2d9cdc,#007dc4);*/
+    /*background: linear-gradient(#d7b600,#e78d00);*/
+    background: linear-gradient(#ffffff,#bcbcbc);
+    box-shadow: 3px 3px 4px rgba(0,0,0,.4);
+}
+
+/*医院图标popup样式*/
+.regionPopup{
+    width: 180px;height: auto;
+}
+.regionPopup_title{
+    font-size: 16px; border-collapse:collapse;text-align: center; 
+    color: #553814;font-weight: bold; height: 40px;line-height: 40px; 
+    background: linear-gradient(#d6762c,#ee9e3b);
+    border-radius: 10px 10px 0 0;
+}
+.regionPopup_tab{
+    color: #444444; border-collapse:collapse;font-size: 13px; 
+    width: 100%;height: auto;background-color: #def0f2;
+    border-radius:0 0 10px 10px;
+}
+.regionPopup_tab a{
+    text-decoration: none;
+    font-size: 15px;
+}
+.regionPopup_tab tr{
+    border-bottom: 2px solid white;height: 27px;
+}
+.regionPopup_tab tr:last-child{
+    height: auto;text-align: center;
+    border: none;
+}			
+.regionPopup_tab tr td:first-child{
+    width: 50%;text-align: center;
+    border-right: 2px solid white;
+}
+.regionPopup_tab tr td:last-child{
+    text-align: center;
+    border-left: 2px solid white;
+}
+.regionPopup_tab tr:last-child td{
+    width: 50%;height:28px; text-align: center;
+    vertical-align: middle;border: none;
+}
+.regionPopup_tab tr:last-child button{
+    //color: #f6efdf;
+    color: #346bbd;
+    font-weight: 600; width: 72px;height: 23px;
+    border-radius: 5px;background: linear-gradient(#faaf72,#f9a45f);
+}

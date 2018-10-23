@@ -1,0 +1,14 @@
+const config = {
+  mapurl_outdoor: 'http://192.168.1.45:8081/geoserver/gwc/service/tms/1.0.0/cite%3Abg@EPSG%3A900913@png/{z}/{x}/{y}.png',
+  mapurl_indoor1: 'http://192.168.1.45:19840/geowebcache/service/wms', // 室内第一层
+  mapurl_indoor: {
+    indoor1: 'http://192.168.1.45:19840/geowebcache/service/wms'
+  },
+  // 外网
+  // mapurl_outdoor: 'http://139.196.86.8:8080/geoserver/gwc/service/tms/1.0.0/cite%3Abg@EPSG%3A900913@png/{z}/{x}/{y}.png'
+  // 室内入口数据(内网)
+  url_rukou: '/ParkGisSys/MapRegion/outdoor_region'
+
+}
+
+module.exports.config = config

@@ -1,0 +1,456 @@
+<template>
+    <div class="rootdiv">
+        <el-row :gutter="10" class="row1">
+            <el-col :span="8" >
+                <el-card >
+                    <div slot="header" >
+                        <span class="card-title-text">设备数量统计</span>
+                        <el-button style="float: right; padding: 3px" type="primary  ">设备总数：820台</el-button>
+                    </div>
+                    <div id="div_chart1" class="div-chart"  >
+                        内容
+                    </div>
+                </el-card>
+            </el-col>
+            <el-col :span="8"  >
+                <el-card class="box-card">
+                    <div slot="header" >
+                        <span class="card-title-text">每月维修统计</span>
+                        <el-button style="float: right; padding: 3px 0" type="primary">2018年总维修次数：65次</el-button>
+                    </div>
+                    <div id="div_chart2" class="div-chart" >
+                        内容
+                    </div>
+                </el-card>
+            </el-col>
+            <el-col :span="8" class="mg-col">
+                <el-card class="box-card">
+                    <div slot="header" >
+                        <span class="card-title-text">设备品牌统计</span>
+                        <el-button style="float: right; padding: 3px 0" type="primary">类型数：4个</el-button>
+                    </div>
+                    <div id="div_chart3" class="div-chart" >
+                        内容
+                    </div>
+                </el-card>
+            </el-col>
+        </el-row>
+        
+        <el-row :gutter="10" class="row2" >
+            <el-col :span="24" >
+                <el-card class="box-card">
+                    <div slot="header" >
+                        <span class="card-title-text">数据汇总</span>
+                        <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+                    </div>
+                    <div class="margin10 ">
+                        <el-row >
+                            <el-col :span="1"><span style="visibility: hidden">123</span></el-col>
+                            <el-col :span="22" class="col-center" >
+                                <el-button plain icon="el-icon-share" size="medium">
+                                    设备总数
+                                    <span class="row2-num">214</span>
+                                </el-button>
+                                <el-button plain icon="el-icon-share" size="medium" >
+                                    呼吸机
+                                    <span class="row2-num">214</span>
+                                </el-button>  
+                                <el-button plain icon="el-icon-share" size="medium">
+                                    监护仪
+                                    <span class="row2-num">214</span>
+                                </el-button>    
+                                <el-button plain icon="el-icon-share" size="medium">
+                                    CT数量
+                                    <span class="row2-num">214</span>
+                                </el-button>    
+                                <el-button plain icon="el-icon-share" size="medium">
+                                    备品备件
+                                    <span class="row2-num">214</span>
+                                </el-button>    
+                                <el-button plain icon="el-icon-share" size="medium">
+                                    设备种类
+                                    <span class="row2-num">214</span>
+                                </el-button>     
+
+                            </el-col>
+
+                            <el-col :span="1"><span style="visibility: hidden">123</span></el-col>
+                        </el-row>
+                        
+                    </div>
+                </el-card>
+            </el-col>
+        </el-row>
+
+        <el-row :gutter="10" class="row3" >
+            <el-col :span="12" >
+                <el-card class="box-card">
+                    <div slot="header" >
+                        <span class="card-title-text">待处理任务</span>
+                        <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+                    </div>
+                    <div>
+                        内容
+                    </div>
+                </el-card>
+            </el-col>
+            <el-col :span="12" >
+                <el-card class="box-card">
+                    <div slot="header" >
+                        <span class="card-title-text">卡片名称</span>
+                        <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+                    </div>
+                    <div>
+                        内容
+                    </div>
+                </el-card>
+            </el-col>
+
+        </el-row>
+    </div>
+</template>
+
+<script>
+export default {
+    data: function(){
+        return {
+            chart_coloropt:['#2f4554','#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'],
+            data_chart1:[
+                ['设备类型', '设备总数', '正在维修', '报修数量'],
+                ['1号门诊楼', 27, 1, 3],
+                ['2号门诊楼', 25, 2, 4],
+                ['第一住院大楼', 30, 1, 2],
+                ['第二住院大楼', 22, 5, 1],
+                ['第三住院大楼', 19, 3, 1],
+                ['第四住院大楼', 35, 3, 2]
+            ],
+            data_chart2:[
+                ['月份', '维修数量'],
+                ['十二月', null],
+                ['十一月', null],
+                ['十月', 1],
+                ['九月', 18],
+                ['八月', 1],
+                ['七月', 20],
+                ['六月', 4],
+                ['五月', 6],
+                ['四月', 2],
+                ['三月', 9],
+                ['二月', 5],
+                ['一月', 15],
+                
+            ],
+            data_chart3:[
+                ['品牌', '数量'],
+                ['迈瑞', 271],
+                ['欧美达', 190],
+                ['瑞思迈', 100],
+                ['飞利浦', 68],
+
+            ],
+
+        }
+    },
+    computed: {
+
+    },
+    mounted: function(){
+        this.render_chart1();
+        this.render_chart2();
+        this.render_chart3();    
+        
+    },
+    methods: {
+        render_chart1: function(){    
+            let myChart1 = this.$echarts.init(document.getElementById('div_chart1'));
+            let option = {
+                tooltip: {},
+                dataset:{
+                    source: this.data_chart1
+                },
+                legend: {
+                    
+                },
+                color: this.chart_coloropt,
+                xAxis: {
+                    type: 'category',
+                    axisLabel:{
+                        show: true,
+                        //fontSize: 10
+                    },
+                    axisTick: {
+                        show: false
+                    },
+                    axisLine: {
+                        show: false
+                    },
+           
+                },
+                yAxis: {
+                    axisTick: {
+                        show: false
+                    },
+                    axisLine: {
+                        show: false
+                    },
+                    splitLine:{     // 垂直网格
+                        show: true,
+                        lineStyle:{
+                            type: 'dotted'
+                        }
+                        
+                    }                    
+                },
+                grid:{
+                    show: true,
+                    left: '10%', right: '5%', top: 40, bottom: 40,                   
+                    backgroundColor: '#ededed'
+                },
+                series: [
+                    {   
+                        type: 'bar',
+                        label: {
+                            show: true,
+                            position: 'insideTop',
+                        }
+                    },
+                    {
+                        type: 'bar',
+                        label: {
+                            show: true,
+                            position: 'top',
+                        }                        
+                    },
+                    {
+                        type: 'bar',
+                        label: {
+                            show: true,
+                            position: 'top',
+                        }                        
+                    }
+                ],
+                dataZoom:{
+                    type: 'inside',
+                }            
+            }
+
+            myChart1.setOption(option);
+
+        },
+        render_chart2: function(){    
+            let myChart2 = this.$echarts.init(document.getElementById('div_chart2'));
+            let option = {
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow'
+                    }   
+                },
+                color: this.chart_coloropt,
+                dataset:{
+                    source: this.data_chart2
+                },
+                legend: {
+                    show: false
+                },
+                xAxis: {
+                    axisTick: {
+                        show: false
+                    },
+                    axisLine: {
+                        show: false
+                    },
+                    splitLine:{     // 垂直网格
+                        show: true,
+                        lineStyle:{
+                            type: 'dotted'
+                        }
+                        
+                    }   
+
+                    
+           
+                },
+                yAxis: {
+                    type: 'category',
+                    axisLabel:{
+                        show: true,
+                        fontSize: 10
+                    },
+                    axisTick: {
+                        show: false
+                    },
+                    axisLine: {
+                        show: false
+                    },                 
+                },
+                grid:{
+                    show: true,
+                    left: '12%', right: '3%', top: 10, bottom: 40,                   
+                    //backgroundColor: '#ededed'
+                },
+                series: [
+                    {
+                        type: 'bar',
+                        color: '#61a0a8',
+                        label: {
+                            show: true,
+                            position: 'insideRight',
+                        },
+                    
+                    }
+                  
+                ],
+                dataZoom:{
+                    type: 'inside',
+                }            
+            }
+
+            myChart2.setOption(option);
+
+        },
+        render_chart3: function(){    
+            let myChart3 = this.$echarts.init(document.getElementById('div_chart3'));
+            let option = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{c}台 ({d}%)"  
+                },
+                dataset:{
+                    source: this.data_chart3
+                },
+
+                visualMap: {
+                    show: false,
+                    min: 80,
+                    max: 600,
+                    inRange: {
+                        colorLightness: [0, 1]
+                    }
+                },
+
+                series: [
+                    {
+                        name:'设备类型统计',
+                        type:'pie',
+                        center: ['50%', '50%'],
+                        roseType: 'radius',
+                        label: {
+                            normal: {
+                                textStyle: {
+                                    color: '#737272'
+                                }
+                            }
+                        },
+                        labelLine: {
+                            normal: {
+                                lineStyle: {
+                                    color: '#c8c6c6'
+                                },
+                                smooth: 0.2,
+                                length: 10,
+                                length2: 20
+                            }
+                        },
+                        itemStyle: {
+                            normal: {
+                                color: '#c23531',
+                                shadowBlur: 200,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        },
+
+                        animationType: 'scale',
+                        animationEasing: 'elasticOut',
+                        animationDelay: function (idx) {
+                            return Math.random() * 200;
+                        }
+                    }
+                  
+                ],
+       
+            }
+
+            myChart3.setOption(option);
+
+        },
+    }
+
+    
+}
+</script>
+
+<style lang="scss" scoped>
+.rootdiv{
+    $row-padding: 5px 10px;
+    height: 100%;
+    .el-row{
+        margin: 0!important;
+        // .el-col{
+        //     height: 100%;
+        //     .el-card{
+        //         height: 100%;
+        //     }
+        // }
+
+    }
+
+    // card样式
+    .card-title-text{
+        font-weight: bold;
+    }
+        .el-col{
+            height: 100%;
+            .el-card__body{
+                height: 100%;
+            }
+            .el-card{
+                height: 100%;
+                
+            }
+        }
+
+    // 三行高度设置
+    .div-chart{
+        height: 280px;
+    }
+    .row1{      
+        //height: 40%;
+        padding: $row-padding;
+
+    }
+    .row2{
+        padding: $row-padding;
+        .col-center{
+            text-align: center;
+            .el-button{
+                margin-top: 5px;
+                margin-bottom: 5px;
+            }
+            .el-button+.el-button {
+                margin-left: 5px!important;
+            }
+
+        }
+        .row2-num{
+            font-weight: 600;
+            display: inline-block;
+            padding: .4rem .6rem;
+            background: #d1dade;
+            border-radius: 10%;
+        }
+
+    }
+    .row3{
+        //height: 40%;
+        //margin-bottom: 20px;
+        padding: $row-padding;
+
+    }
+    
+
+
+
+}
+
+</style>

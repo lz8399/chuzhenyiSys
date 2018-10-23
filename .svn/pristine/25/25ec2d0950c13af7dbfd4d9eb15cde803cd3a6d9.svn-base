@@ -1,0 +1,72 @@
+<template>
+<div class="rootdiv">
+  <el-container>
+
+    <el-aside width='180px'>
+      <pageaside></pageaside>
+    </el-aside>
+
+    <el-container>
+      <el-header>
+        <pageHeader></pageHeader>
+      </el-header>
+
+      <el-main>
+        <router-view></router-view>
+      </el-main>
+
+      <el-footer>
+        ©2018 CASIT
+      </el-footer>
+
+    </el-container>
+  </el-container>
+
+</div>
+
+    
+
+</template>
+
+<script>
+import pageHeader from '../public/header'
+import pageaside from '../public/aside'
+
+export default {
+    components: {pageHeader, pageaside},
+  
+}
+</script>
+
+<style lang="scss" scoped>
+.rootdiv{
+  height: 100%;
+  .el-container{
+    height: 100%;
+
+    .el-header{
+      //background: rgb(109, 128, 109);
+      border-bottom: 1px solid #39aef5;
+    }
+
+    .el-aside{
+      //width: 180px!important;
+      background: grey;
+    }
+
+    .el-main{
+      background: #f3f3f4;
+    }
+
+    .el-footer{
+      height: 36px!important;
+      line-height: 36px;
+      text-align: right;
+      
+    }
+  }
+  
+
+}
+
+</style>

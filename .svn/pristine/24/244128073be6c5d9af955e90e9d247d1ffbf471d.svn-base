@@ -1,0 +1,48 @@
+<template>
+<div class="root">
+    <el-row type="flex" align="middle" >
+        <span class="logo"></span>
+        <el-col :span="10">
+            <span class="title" >物联网技术下的呼吸机动态综合管理系统</span>
+        </el-col>
+        <el-col :offset="4" :span="8">
+            <div class="icons" ></div>
+        </el-col>
+    </el-row>
+    
+</div>
+    
+</template>
+
+<script>
+export default {
+    
+}
+</script>
+
+<style lang="scss" scoped>
+.root{
+    height: 100%;
+    .el-row{
+        height: 100%;
+    }
+}
+
+.title{
+    display: inline-block;
+    min-width: 324px;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+.logo{
+    display: inline-block;
+    min-width: 2.5rem;
+    width: 2.5rem; height: 2.5rem;
+    margin-right: .5rem;
+}
+
+.icons{
+    display: inline-block;
+}
+
+</style>

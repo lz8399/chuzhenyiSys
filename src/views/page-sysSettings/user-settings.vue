@@ -1,0 +1,126 @@
+<template>
+<div id="usersettings-page" class="margin20" >
+    <el-card >
+        <div slot="header" >
+            <span class="card-title-text">用户设置</span>
+            <el-button style="float: right; padding: 3px 0" @click="backHome()" type="text">返回</el-button>
+        </div>
+        <div class="card-content padding20" >
+            <el-form label-position="left" label-width="80px" :model="userinfo" >
+                <el-form-item label="用户名称">
+                    <el-input v-model="userinfo.name" clearable></el-input>
+                </el-form-item>
+                <el-form-item label="联系方式">
+                    <el-input v-model="userinfo.phone" clearable></el-input>
+                </el-form-item>
+                <el-form-item label="联系邮箱">
+                    <el-input v-model="userinfo.email" clearable></el-input>
+                </el-form-item>
+                <el-form-item label="个性签名">
+                    <el-input type="textarea" rows="4" v-model="userinfo.signText"></el-input>
+                </el-form-item>    
+                <el-form-item label="头像">
+                    <el-upload
+                    class="avatar-uploader"
+                    action="#"
+                    :show-file-list="false"
+                    :on-success="handleAvatarSuccess"
+                    :before-upload="beforeAvatarUpload">
+                        <img v-if="userinfo.toux" :src="userinfo.toux" class="avatar">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                    
+                </el-form-item>
+                <el-form-item style="text-align: center">
+                    <el-button type="primary" @click="onSubmit">保 存</el-button>
+                    <el-button style="margin-left: 2rem;" @click="backHome()" >取 消</el-button>
+                </el-form-item>
+            </el-form>
+        </div>
+    </el-card>
+
+
+</div>   
+</template>
+
+<script>
+export default {
+    data: function(){
+        return {
+            userinfo:{
+                name: null,
+                phone: null,
+                email: null,
+                signText: null,
+                toux: null
+            },
+            rules:{
+
+            }
+        }
+    },
+    methods:{
+        backHome: function(){
+            this.$router.push({path: '/main/home'});
+        },
+        handleAvatarSuccess(res, file) {
+            this.userinfo.toux = URL.createObjectURL(file.raw);
+        },
+        beforeAvatarUpload(file) {
+            const isJPG = file.type === 'image/jpeg';
+            const isLt2M = file.size / 1024 / 1024 < 2;
+
+            if (!isJPG) {
+                this.$message.error('上传头像图片只能是 JPG 格式!');
+            }
+            if (!isLt2M) {
+                this.$message.error('上传头像图片大小不能超过 2MB!');
+            }
+            return isJPG && isLt2M;
+        },
+        onSubmit: function(){
+            console.log(this.userinfo);
+            
+        }
+
+
+    }
+    
+}
+</script>
+
+<style lang="scss">
+#usersettings-page{
+    .card-content{
+        width: 55%;
+        margin: auto;
+    }
+
+     .avatar-uploader .el-upload {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+    .avatar-uploader .el-upload:hover {
+        border-color: #409EFF;
+    }
+    .avatar-uploader-icon {
+        font-size: 28px;
+        color: #8c939d;
+        width: 178px;
+        height: 178px;
+        line-height: 178px;
+        text-align: center;
+    }
+    .avatar {
+        width: 178px;
+        height: 178px;
+        display: block;
+    }
+
+
+}
+
+</style>

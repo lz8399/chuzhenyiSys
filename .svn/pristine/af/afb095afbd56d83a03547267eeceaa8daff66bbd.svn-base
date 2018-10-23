@@ -1,0 +1,111 @@
+<template>
+    <div class="rootdiv">
+        <el-row :gutter="10">
+            <el-col :span="8" >
+                <el-card >
+                    <div slot="header" >
+                        <span>设备数量统计</span>
+                        <el-button style="float: right; padding: 3px" type="primary  ">设备总数：820台</el-button>
+                    </div>
+                    <div>
+                        内容
+                    </div>
+                </el-card>
+            </el-col>
+            <el-col :span="8"  >
+                <el-card class="box-card">
+                    <div slot="header" >
+                        <span>每月维修统计</span>
+                        <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+                    </div>
+                    <div>
+                        内容
+                    </div>
+                </el-card>
+            </el-col>
+            <el-col :span="8" class="mg-col">
+                <el-card class="box-card">
+                    <div slot="header" >
+                        <span>设备品牌统计</span>
+                        <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+                    </div>
+                    <div>
+                        内容
+                    </div>
+                </el-card>
+            </el-col>
+        </el-row>
+        
+        <el-row >
+            <el-col :span="24" >
+                <el-card class="box-card">
+                    <div slot="header" >
+                        <span>数据汇总</span>
+                        <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+                    </div>
+                    <div>
+                        内容
+                    </div>
+                </el-card>
+            </el-col>
+        </el-row>
+
+        <el-row :gutter="10">
+            <el-col :span="12" >
+                <el-card class="box-card">
+                    <div slot="header" >
+                        <span>待处理任务</span>
+                        <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+                    </div>
+                    <div>
+                        内容
+                    </div>
+                </el-card>
+            </el-col>
+            <el-col :span="12" >
+                <el-card class="box-card">
+                    <div slot="header" >
+                        <span>卡片名称</span>
+                        <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+                    </div>
+                    <div>
+                        内容
+                    </div>
+                </el-card>
+            </el-col>
+
+        </el-row>
+    </div>
+</template>
+
+<script>
+export default {
+    
+}
+</script>
+
+<style lang="scss" scoped>
+.rootdiv{
+    .el-row{
+        margin-top: 10px;
+    }
+    .el-row:first-child{
+        margin-top: 0;
+    }
+
+    // card样式
+    .el-card{
+        .card-header-lable{
+            display: inline-block;
+            margin-right: 20px;
+            color: #FFFFFF;
+            background-color: #1c84c6;
+        }
+
+    }
+
+
+
+}
+
+</style>

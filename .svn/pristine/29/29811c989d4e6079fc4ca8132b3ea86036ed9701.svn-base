@@ -1,0 +1,202 @@
+<template>
+<div id="eq_details" class="margin20">
+    <el-row class="row1 " :gutter="10">
+        <el-col :span="10">
+            <el-card >
+                <div slot="header" >
+                    <span class="card-title-text">设备详情</span>
+                    <el-button-group style="float: right; transform: translateY(-20%)">
+                        <el-button type="primary" style="padding: 8px 12px" @click="editInfo()">编辑</el-button>   
+                        <el-button type="primary" style="padding: 8px 12px" @click="back()">返回</el-button>
+                   </el-button-group> 
+
+                </div>
+
+                <el-form :model="eq_info" label-width="80px" label-position="left">
+                    <el-form-item label="名 称">
+                        <el-input v-model="eq_info.name" :disabled="isdisabled"></el-input>
+                    </el-form-item>                       
+                    <el-form-item label="编 号">
+                        <el-input v-model="eq_info.number" :disabled="isdisabled"></el-input>
+                    </el-form-item>
+                    <el-form-item label="类 型">
+                        <el-input v-model="eq_info.type" :disabled="isdisabled"></el-input>
+                    </el-form-item>   
+                    <el-form-item label="品 牌">
+                        <el-input v-model="eq_info.brand" :disabled="isdisabled"></el-input>
+                    </el-form-item>   
+                    <el-form-item label="型号规格">
+                        <el-input v-model="eq_info.model" :disabled="isdisabled"></el-input>
+                    </el-form-item>   
+                    <el-form-item label="所属科室">
+                        <el-input v-model="eq_info.owner" :disabled="isdisabled"></el-input>
+                    </el-form-item>   
+                    <el-form-item label="当前位置">
+                        <el-input v-model="eq_info.position" :disabled="isdisabled"></el-input>
+                    </el-form-item>   
+
+
+
+                    <el-form-item label="备注">
+                        <el-input type="textarea" v-model="eq_info.bz" :disabled="isdisabled"></el-input>
+                    </el-form-item>
+                    <el-form-item style="margin: 0 auto;">
+                        <el-button type="primary" @click="submitEqinfo()">提 交</el-button>
+                        <el-button type="info" @click="cancelSubmit()" >取 消</el-button>
+                    </el-form-item>
+                </el-form>                
+                       
+
+            </el-card>                
+
+
+        </el-col>
+        
+        <el-col :span="14">
+            <el-card >
+                <div class="img">
+                    <img src="../../assets/images/ep1.jpg" >
+                </div>
+
+                <el-collapse v-model="activeNames" @change="handleChange">
+                    <el-collapse-item title="使用频次分析" name="1">
+                        <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
+                        <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
+                    </el-collapse-item>
+                    <el-collapse-item title="质检信息" name="2">
+                        <div>控制反馈：通过界面样式和交互动效让用户可以清晰的感知自己的操作；</div>
+                        <div>页面反馈：操作后，通过页面元素的变化清晰地展现当前状态。</div>
+                    </el-collapse-item>
+                    <el-collapse-item title="故障维修记录" name="3">
+                        <div>简化流程：设计简洁直观的操作流程；</div>
+                        <div>清晰明确：语言表达清晰且表意明确，让用户快速理解进而作出决策；</div>
+                        <div>帮助用户识别：界面简单直白，让用户快速识别而非回忆，减少用户记忆负担。</div>
+                    </el-collapse-item>
+                    <el-collapse-item title="应用知识库" name="4">
+                        <div>操作手册：</div>
+                        <div>用户手册：</div>
+                        <div>维修手册：</div>
+                    </el-collapse-item>
+                </el-collapse>
+
+            </el-card>
+        </el-col>        
+        
+    </el-row>
+
+
+
+</div>
+    
+</template>
+
+<script>
+export default {
+    data: function(){
+        return {
+            isdisabled: true,
+            original_eqInfo: {  // 存储没有修改的设备数据
+                number: null, 
+                name: '', 
+                type: '', 
+                brand: '', 
+                model: '', 
+                owner: '', 
+                position: '',
+            },  
+            eq_info: {
+                number: null, 
+                name: '', 
+                type: '', 
+                brand: '', 
+                model: '', 
+                owner: '', 
+                position: '',
+
+            }
+
+        }
+    },
+    created: function(){
+        this.getEqInfo();
+    },
+    mounted: function(){
+        
+    },
+    methods: {
+        getEqInfo: function(){  // 获取所传递过来的设备信息参数
+            let info = this.$route.params;
+            if(info.number){
+                this.eq_info = info;
+                this.original_eqInfo.number = info.number;
+                this.original_eqInfo.name = info.name;
+                this.original_eqInfo.type = info.type;
+                this.original_eqInfo.brand = info.brand;
+                this.original_eqInfo.model = info.model;
+                this.original_eqInfo.owner = info.owner;
+                this.original_eqInfo.position = info.position;
+                
+            }
+        },
+        editInfo: function(){   // 开始编辑
+            this.isdisabled = false;
+        },
+        submitEqinfo: function(){   // 提交修改
+            this.isdisabled = true;
+            this.back();
+        },
+        cancelSubmit: function(){   // 取消修改
+            this.eq_info = this.original_eqInfo;
+            this.isdisabled = true;
+        },
+        back: function(){
+            this.$router.go(-1);
+        },
+        handleChange: function(val) {
+            console.log(val);
+        }
+
+    }
+    
+}
+</script>
+
+<style lang="scss">
+#eq_details{
+    // input disabled 样式
+    .el-input.is-disabled .el-input__inner {
+        background-color: #f5f5fa;
+        border-color: #e4e7ed;
+        color: #666;
+        cursor: not-allowed;
+    }    
+
+
+    .row1{
+        .img{
+            height: 300px;
+            text-align: center;
+            img{
+                height: 100%;
+            }
+            
+        }
+
+    }
+    height: 95%;
+    .el-row{
+        height: 100%;
+        .el-col{
+            height: 100%;
+            .el-card{
+                height: 100%;
+            }
+        }
+    }
+
+
+
+
+}
+
+</style>

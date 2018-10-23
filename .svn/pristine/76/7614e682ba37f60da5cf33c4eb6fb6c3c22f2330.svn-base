@@ -1,0 +1,202 @@
+<template>
+<div id="map" ref="lmap" style="height: 100%;">
+
+</div>
+    
+</template>
+
+<script>
+import * as L from 'leaflet'
+import {config} from '../../components/base_config.js'
+
+// // leaflet插件
+// import {mapkey} from '../../assets/plugins/leaflet-mapkey-icon-master/dist/L.Icon.Mapkey.js'
+
+export default {
+    data: function(){
+        return{
+            map: null,
+            mapOptions:{
+                zoom: 18,
+                center: L.latLng(34.264985092894754,108.87002792029007),
+                minZoom:17,
+                maxZoom:25,
+                
+
+            },
+            //url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+            outdoormap_opt:{    // 园区图层
+                attribution: '',
+                url: config.mapurl_outdoor,
+                tms: true
+            },
+            tooltips_rukou: L.layerGroup(),   // 室内入口tooltip
+            markers_rukou: L.layerGroup(),  // 室内入口marker
+            equip_info:{
+                total: 17,
+                repair: 1,
+                declare: 2,
+            }
+        }
+    },
+    mounted: function(){
+        this.createMap();
+
+
+    },
+    computed: {
+
+    },
+    methods: {
+        createMap: function(){
+            this.map = L.map("map", {
+                center: this.mapOptions.center,
+                zoom: this.mapOptions.zoom,
+                attributionControl: false,
+                minZoom: this.mapOptions.minZoom,
+                maxZoom: this.mapOptions.maxZoom,
+                doubleClickZoom: false,
+            });
+
+            let outdoorMap = L.tileLayer(this.outdoormap_opt.url, {
+                tms: true,
+                minZoom:17,
+                maxZoom:25
+            }).addTo(this.map);
+
+            this.rukou_render();
+
+
+        },
+        // 渲染室内入口
+        rukou_render: function(){   
+            this.$http.post(process.env.API_HOST + config.url_rukou, {}, {emulateJSON:true}).then((response)=>{
+                let arr_rukou = response.body;
+                console.log(arr_rukou);
+                let tooltip_option ={direction:"top",permanent:true,offset:[0,-9],className:"nameTooltip2",opacity:0.9};
+                            
+                // let popupStr = `<div class="regionPopup">
+                //     <div class="regionPopup_title">除震仪</div>
+                //         <table class="regionPopup_tab">
+                //             <tr>
+                //                 <td>设备总数:</td>
+                //                 <td>
+                //                     <a href="#" id="equip_totality" onclick="equipmentsState_detail()">${this.equip_info.total} </a>台
+                //                 </td>
+                //             </tr>
+                //             <tr>
+                //                 <td>正在维修:</td>
+                //                 <td>
+                //                     <a href="#" id="equip_repair" onclick="equipmentsState_detail()">${this.equip_info.repair} </a>台
+                //                 </td>
+                //             </tr>
+                //             <tr>
+                //                 <td>故障申报:</td>
+                //                 <td>
+                //                     <a href="#" id="equip_apply" onclick="equipmentsState_detail()">${this.equip_info.declare} </a>台
+                //                     </td>
+                //             </tr>
+                //             <tr>
+                //                 <td><button type="button" >学员管理</button></td>
+                //                 <td><button type="button" onclick="hos_check()">查看详情</button></td>
+                //             </tr>
+                //         </table>
+                //     </div>`
+
+
+                for(let i=0; i < arr_rukou.length; i++){
+                    switch(arr_rukou[i].state){                        
+                        case 0:		//正常状态设备
+                            let popupStr = `<div class="regionPopup">
+                                <div class="regionPopup_title">除震仪</div>
+                                    <table class="regionPopup_tab">
+                                        <tr>
+                                            <td>设备总数:</td>
+                                            <td>
+                                                <a href="#" id="equip_totality" onclick="equipmentsState_detail()">${this.equip_info.total} </a>台
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>正在维修:</td>
+                                            <td>
+                                                <a href="#" id="equip_repair" onclick="equipmentsState_detail()">${this.equip_info.repair} </a>台
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>故障申报:</td>
+                                            <td>
+                                                <a href="#" id="equip_apply" onclick="equipmentsState_detail()">${this.equip_info.declare} </a>台
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <td><button type="button" style="visibility: hidden" >学员管理</button></td>
+                                            <td><button type="button" onclick="hos_check()">查看详情</button></td>
+                                        </tr>
+                                    </table>
+                                </div>`
+
+                            let pic= L.icon.mapkey({icon:"mki mki-home",size:25,background:false,color:"#d84d09",borderRadius: 8});
+                            let popup = L.popup({autoClose: false, className: 'popup-margin0'})
+                                .setContent(popupStr);
+                                
+                            let state_normal= L.marker([arr_rukou[i].x, arr_rukou[i].y],{icon:pic,id:i})
+                                .bindPopup(popup);
+                            let tooltip=state_normal.bindTooltip("<div style='margin: 0px;color: #000000'>"+arr_rukou[i].name+"</div>",tooltip_option);
+                            // 室内入口图标点击进入室内地图
+                            state_normal.on('click',(e)=>{
+                                //arr_rukou[this.options.id].layerIDArr[0],0
+                                //this.goIndoor();
+                            });
+
+                            // 鼠标经过事件
+                            state_normal.on('mouseover', (e)=>{  
+                                state_normal.openPopup();
+                                state_normal.closeTooltip();
+                                
+                            });
+
+                            state_normal.on('popupclose',()=>{
+                                state_normal.openTooltip();
+                            })
+
+
+                            this.tooltips_rukou.addLayer(tooltip);
+                            this.markers_rukou.addLayer(state_normal);
+                        //  break;
+                    }                    
+                    
+                }
+                this.tooltips_rukou.addTo(this.map);
+                            
+            }, (response)=>{
+                console.log('室内入口数据获取失败');
+                return response.json();
+
+            });            
+
+        },
+        // 进入室内
+        goIndoor: function(){
+            
+        },
+
+        //鼠标经过区域marker，打开设备详情
+
+
+
+
+    },
+
+
+}
+</script>
+
+<style lang="scss" scoped>
+// leaflet插件
+
+#map{
+    background: #ffffff
+}
+		
+
+</style>
